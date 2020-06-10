@@ -8,7 +8,7 @@ import java.util.Set;
 import iisc.edu.pll.analysis.Globals;
 import iisc.edu.pll.data.lattice.AbstractValue;
 import iisc.edu.pll.data.lattice.TFunction;
-import scala.collection.generic.BitOperations.Int;
+
 
 public class RDValue implements TFunction {
 

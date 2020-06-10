@@ -36,7 +36,7 @@ import iisc.edu.pll.data.lattice.TFunction;
 import iisc.edu.pll.data.lattice.TFunctionFactory;
 import iisc.edu.pll.exceptions.DFRejectedException;
 import iisc.edu.pll.lattice.cp.ConstantPropagation;
-import scala.Int;
+
 
 public class DataFlowSequential {
 
@@ -161,7 +161,7 @@ public class DataFlowSequential {
 	// possible targets
 
 	private void printStats() {
-		int reachableState= 0, maxConfig = -1, minConfig = Int.MaxValue();
+		int reachableState= 0, maxConfig = -1, minConfig = Integer.MAX_VALUE;
 		double totalConfig =0.0, avgConfig =0.0;
 		HashMap<Integer, Vector<Byte>> mode = new HashMap<>();
 		

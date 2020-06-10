@@ -3,30 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>AsyncDataAnalyzer</groupId>
 	<artifactId>AsyncDataAnalyzer</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.RELEASE</version>
+	<packaging>jar</packaging>
 
-	<properties>
-		<akka.version>2.6.4</akka.version>
-	</properties>
 
 
 	<dependencies>
-		<dependency>
-			<groupId>com.typesafe.akka</groupId>
-			<artifactId>akka-actor-typed_2.13</artifactId>
-			<version>${akka.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.typesafe.akka</groupId>
-			<artifactId>akka-actor-testkit-typed_2.13</artifactId>
-			<version>${akka.version}</version>
-			<scope>test</scope>
-		</dependency>
-		 <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
-        </dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -39,12 +21,14 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
 		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.14</version>
 		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
 		<dependency>
