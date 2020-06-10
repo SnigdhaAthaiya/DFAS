@@ -39,12 +39,9 @@ public class MainForward {
 
 	private String inputFilename;
 	private String latticeType;
-	private Mode mode = Mode.DEMAND; // default mode
 	private int cutoff = 0; // default cutoff
 	private boolean debug = false; // default
-	private String assertionFile;
-	private boolean checkAssertion;
-	private byte filterMode;
+	private boolean validParams;
 
 	long mainProgramStartTime;
 
@@ -52,26 +49,29 @@ public class MainForward {
 		MainForward m = new MainForward();
 
 		try {
+			m.validParams = true;
 			m.parseArguments(args);
-
 			PropertyConfigurator.configure("log4j.properties");
-
 			m.mainProgramStartTime = System.currentTimeMillis();
-
-			m.runAnalysis();
-		} catch (Throwable e) {
-			System.out.println("excpetion in main :" + e.getMessage());
+			if (m.validParams)
+				m.runAnalysis();
+			else
+				System.out.println("invalid params");
+		} catch (Exception e) {
+			System.out.println("excpetion in main :" + e);
 			e.printStackTrace();
 
 		}
 
 		long totalTime = ((System.currentTimeMillis() - m.mainProgramStartTime));
-		System.out.println("Total Time Taken :" + totalTime / 1000); // time
-		mainLogger.info("Total Time Taken :" + totalTime / 1000 + "\n"); // time
+
+		System.out.println("Total Time Taken (ms):" + totalTime); // time
+		mainLogger.info("Total Time Taken (ms):" + totalTime); // time
+
+		System.out.println("Total Time Taken (s):" + totalTime / 1000); // time
+		mainLogger.info("Total Time Taken (s):" + totalTime / 1000 + "\n"); // time
 		// in
 		// sec
-		System.out.println("Total Time Taken :" + totalTime); // time
-		mainLogger.info("Total Time Taken :" + totalTime); // time
 
 	}
 
@@ -227,12 +227,11 @@ public class MainForward {
 
 		mainLogger.info("start state :" + init + "\n");
 		mainLogger.info("cutoff :" + cutoff + "\n");
-		mainLogger.info("mode :" + mode + "\n");
+		
 
 		int numOfConstants = 0;
 		try {
-			DataFlowSequential dfs = new DataFlowSequential(latticeType, variables, messageSet, setOfModules, cutoff,
-					mode, debug);
+			DataFlowSequential dfs = new DataFlowSequential(latticeType, variables, messageSet, setOfModules, cutoff, debug);
 			dfs.runAnalysis();
 			for (VarUseInfo varuse : totalVarUseInfo) {
 
@@ -246,9 +245,9 @@ public class MainForward {
 				for (int i = 0; i < vuses.length; i++) {
 					String[] nodevuse = vuses[i].split(",");
 					for (int j = 0; j < nodevuse.length; j++) {
-						if (resultVal.isConstantFor(nodevuse[j])){
-							System.out.println(nodevuse[j] +" is constant at use " + varuse);
-							mainLogger.info(nodevuse[j] +" is constant at use " + varuse + "\n");
+						if (resultVal.isConstantFor(nodevuse[j])) {
+							System.out.println(nodevuse[j] + " is constant at use " + varuse);
+							mainLogger.info(nodevuse[j] + " is constant at use " + varuse + "\n");
 							numOfConstants++;
 						}
 					}
@@ -453,9 +452,9 @@ public class MainForward {
 		Options options = new Options();
 		options.addOption("inputFileName", true, "Input XML file for analysis");
 		options.addOption("latticeType", true, "Name of underlying lattice for analysis (lcp/ara)");
-		options.addOption("mode", true, "naive/demand mode");
-		options.addOption("debug", false, "provide this if debugging required, off by default");
 		options.addOption("cutoff", true, "this is the abstract cutoff for the forward algorithm");
+		options.addOption("debug", false, "provide this if debugging required, off by default");
+		
 		CommandLineParser parser = new DefaultParser();
 
 		try {
@@ -465,29 +464,18 @@ public class MainForward {
 				this.inputFilename = cmd.getOptionValue("inputFileName");
 			} else {
 				System.out.println("kindly enter input XML filename");
-
+				validParams = false;
 				return;
 			}
 			if (cmd.hasOption("latticeType")) {
 				this.latticeType = cmd.getOptionValue("latticeType");
 			} else {
 				System.out.println("kindly enter lattice type ");
-
+				validParams = false;
 				return;
 
 			}
-			if (cmd.hasOption("mode")) {
-				// adding java jar
-				String modeStr = cmd.getOptionValue("mode");
-
-				if (modeStr.equalsIgnoreCase("naive"))
-					this.mode = Mode.NAIVE;
-
-			} else {
-				System.out.println("mode set to demand by default");
-				this.mode = Mode.DEMAND;
-			}
-
+			
 			if (cmd.hasOption("cutoff")) {
 				// adding java jar
 				String cutoffStr = cmd.getOptionValue("cutoff");
@@ -506,16 +494,9 @@ public class MainForward {
 				this.debug = false;
 			}
 
-			if (cmd.hasOption("checkAssertion")) {
-				this.checkAssertion = true;
-				this.assertionFile = getFileName();
-			} else {
-				this.checkAssertion = false;
-				this.assertionFile = "none";
-			}
-
 		} catch (Exception e) {
 			System.out.println("exception!! " + e.getMessage());
+			validParams = false;
 		}
 
 	}

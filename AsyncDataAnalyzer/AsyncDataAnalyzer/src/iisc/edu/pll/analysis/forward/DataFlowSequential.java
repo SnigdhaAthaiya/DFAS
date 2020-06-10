@@ -65,12 +65,11 @@ public class DataFlowSequential {
 	public ProductState stateofInterest;
 	public double newConfigs ;
 
-	Mode runMode;
 	boolean debug;
 
 	// old constructor
 	public DataFlowSequential(String type, ArrayList<String> v, HashSet<String> messageSet,
-			ArrayList<ModuleGraph> graphs, int cutOff, Mode mode, boolean debug) {
+			ArrayList<ModuleGraph> graphs, int cutOff, boolean debug) {
 
 		latticetype = type;
 		graphsInSystem = new ArrayList<>(graphs);
@@ -80,9 +79,7 @@ public class DataFlowSequential {
 
 		this.debug = debug;
 
-		System.out.println("mode :" + mode);
-		runMode = mode;
-
+		
 		ModuleNode[] startStateVec = new ModuleNode[Globals.numberOfModules];
 
 		for (int i = 0; i < Globals.numberOfModules; i++)
@@ -360,7 +357,7 @@ public class DataFlowSequential {
 			byte[] newConfigArr = new byte[Globals.numberOfCounters];
 			
 			
-			if (runMode == Mode.NAIVE) {
+			if (cutoff == 0) {
 				
 				return new Configuration(newConfigArr);
 			}
