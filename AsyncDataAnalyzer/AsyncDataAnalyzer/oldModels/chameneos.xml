@@ -1,0 +1,1222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SPEC SYSTEM "../dat/SPEC.dtd">
+<SPEC>
+	<MODULE>
+		<MTYPE>
+			<NAME VALUE="C0START" />
+			<NAME VALUE="C1START" />
+			<NAME VALUE="HOOKC0" />
+			<NAME VALUE="HOOKC1" />
+			<NAME VALUE="C0HOOKC0" />
+			<NAME VALUE="C0HOOKC1" />
+			<NAME VALUE="C1HOOKC0" />
+			<NAME VALUE="C1HOOKC1" />
+			<NAME VALUE="C0STOP" />
+			<NAME VALUE="C1STOP" />
+		</MTYPE>
+	</MODULE>
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="C0" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="MYCOL0" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="MYHOOK0" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="SELFHOOK0" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="MYCOL0" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="C0START" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="HOOKC0" />
+											</SEND>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="C0HOOKC0" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="MYCOL0" EVAL="FALSE" LABEL="L1IF">
+																	<VARREF>
+																		<NAME VALUE="MYCOL0" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="MYCOL0" EVAL="FALSE" LABEL="L2IF">
+																	<VARREF>
+																		<NAME VALUE="MYCOL0" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN VARUSE="SELFHOOK0" EVAL="FALSE" LABEL="L3">
+												<VARREF>
+													<NAME VALUE="SELFHOOK0" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,SELFHOOK0" />
+													</VARREF>
+													<OP VALUE="+" />
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN VARUSE="MYHOOK0" EVAL="FALSE" LABEL="L4">
+												<VARREF>
+													<NAME VALUE="MYHOOK0" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,MYHOOK0" />
+													</VARREF>
+													<OP VALUE="+" />
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="C0START" />
+											</SEND>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="C0HOOKC1" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<!-- Here 1 always wins -->
+									<STEP>
+										<STMT>
+											<ASSIGN VARUSE="MYCOL0"  EVAL="FALSE" LABEL="L5">
+												<VARREF>
+													<NAME VALUE="MYCOL0" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN VARUSE="MYHOOK0"  EVAL="FALSE" LABEL="L6">
+												<VARREF>
+													<NAME VALUE="MYHOOK0" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,MYHOOK0" />
+													</VARREF>
+													<OP VALUE="+" />
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="C0START" />
+											</SEND>
+										</STMT>
+									</STEP>
+
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="C0STOP" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSERT VARUSE="MYHOOK0, SELFHOOK0"  EVAL="TRUE" LABEL="L7USE">
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="MYHOOK0" />
+													</VARREF>
+													<OP VALUE="," />
+													<CONST VALUE="SELFHOOK0" />
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+
+
+			</SEQUENCE>
+		</PROCTYPE>
+
+	</MODULE>
+
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="C1" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="MYCOL1" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="MYHOOK1" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="SELFHOOK1" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="MYCOL1" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="C1START" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="HOOKC1" />
+											</SEND>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="C1HOOKC1" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<!-- Red always wins. red=1 -->
+									<STEP>
+										<STMT>
+											<ASSIGN VARUSE="MYCOL1"  EVAL="FALSE" LABEL="L8">
+												<VARREF>
+													<NAME VALUE="MYCOL1" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN VARUSE="SELFHOOK1"  EVAL="FALSE" LABEL="L9">
+												<VARREF>
+													<NAME VALUE="SELFHOOK1" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,SELFHOOK1" />
+													</VARREF>
+													<OP VALUE="+" />
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN VARUSE="MYHOOK1"  EVAL="FALSE" LABEL="L10">
+												<VARREF>
+													<NAME VALUE="MYHOOK1" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,MYHOOK1" />
+													</VARREF>
+													<OP VALUE="+" />
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="C1START" />
+											</SEND>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="C1HOOKC0" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<!-- Here 1 always wins -->
+									<STEP>
+										<STMT>
+											<ASSIGN VARUSE="MYCOL1"  EVAL="FALSE" LABEL="L11">
+												<VARREF>
+													<NAME VALUE="MYCOL1" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN VARUSE="MYHOOK1"  EVAL="FALSE" LABEL="L12">
+												<VARREF>
+													<NAME VALUE="MYHOOK1" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,MYHOOK1" />
+													</VARREF>
+													<OP VALUE="+" />
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="C1START" />
+											</SEND>
+										</STMT>
+									</STEP>
+
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="C1STOP" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSERT VARUSE="MYHOOK1, SELFHOOK1"  EVAL="TRUE" LABEL="L13USE">
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="MYHOOK1" />
+													</VARREF>
+													<OP VALUE="," />
+													<CONST VALUE="SELFHOOK1" />
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+
+
+			</SEQUENCE>
+		</PROCTYPE>
+
+	</MODULE>
+
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="BROKER" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="TOTREND" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="FIRSTHOOK" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="FIRSTCOL" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="TOTREND" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="FIRSTHOOK" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="-1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="FIRSTCOL" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="-1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="C0START" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="C1START" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="HOOKC0" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="TOTREND"  EVAL="FALSE" LABEL="L14IF">
+																	<VARREF>
+																		<NAME VALUE="TOTREND" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="C0STOP" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="FIRSTHOOK"  EVAL="FALSE" LABEL="L15IF">
+																	<VARREF>
+																		<NAME VALUE="FIRSTHOOK" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="-1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN>
+																	<VARREF>
+																		<NAME VALUE="FIRSTHOOK" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN>
+																	<VARREF>
+																		<NAME VALUE="FIRSTCOL" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="FIRSTHOOK"  EVAL="FALSE" LABEL="L16IF">
+																	<VARREF>
+																		<NAME VALUE="FIRSTHOOK" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="C0HOOKC0" />
+																</SEND>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN VARUSE="FIRSTCOL"  EVAL="FALSE" LABEL="L17IF">
+																						<VARREF>
+																							<NAME VALUE="FIRSTCOL" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,0" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="C0HOOKC0" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN VARUSE="FIRSTCOL"  EVAL="FALSE" LABEL="L18IF">
+																						<VARREF>
+																							<NAME VALUE="FIRSTCOL" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="C0HOOKC1" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																</IF>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN>
+																	<VARREF>
+																		<NAME VALUE="FIRSTHOOK" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="-1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="TOTREND"  EVAL="FALSE" LABEL="L19">
+																	<VARREF>
+																		<NAME VALUE="TOTREND" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,TOTREND" />
+																		</VARREF>
+																		<OP VALUE="+" />
+																		<VARREF>
+																			<NAME VALUE="-1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="FIRSTHOOK"  EVAL="FALSE" LABEL="L20IF">
+																	<VARREF>
+																		<NAME VALUE="FIRSTHOOK" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="C1HOOKC0" />
+																</SEND>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN VARUSE="FIRSTCOL"  EVAL="FALSE" LABEL="L21IF">
+																						<VARREF>
+																							<NAME VALUE="FIRSTCOL" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,0" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="C0HOOKC0" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN VARUSE="FIRSTCOL"  EVAL="FALSE" LABEL="L22IF">
+																						<VARREF>
+																							<NAME VALUE="FIRSTCOL" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="C0HOOKC1" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																</IF>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN>
+																	<VARREF>
+																		<NAME VALUE="FIRSTHOOK" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="-1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="TOTREND"  EVAL="FALSE" LABEL="L23">
+																	<VARREF>
+																		<NAME VALUE="TOTREND" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,TOTREND" />
+																		</VARREF>
+																		<OP VALUE="+" />
+																		<VARREF>
+																			<NAME VALUE="-1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+
+
+
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="HOOKC1" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="TOTREND"  EVAL="FALSE" LABEL="L24IF">
+																	<VARREF>
+																		<NAME VALUE="TOTREND" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="C1STOP" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="FIRSTHOOK"  EVAL="FALSE" LABEL="L25IF">
+																	<VARREF>
+																		<NAME VALUE="FIRSTHOOK" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="-1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN>
+																	<VARREF>
+																		<NAME VALUE="FIRSTHOOK" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN>
+																	<VARREF>
+																		<NAME VALUE="FIRSTCOL" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="FIRSTHOOK"  EVAL="FALSE" LABEL="L26IF">
+																	<VARREF>
+																		<NAME VALUE="FIRSTHOOK" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="C0HOOKC1" />
+																</SEND>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN VARUSE="FIRSTCOL"  EVAL="FALSE" LABEL="L27IF">
+																						<VARREF>
+																							<NAME VALUE="FIRSTCOL" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,0" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="C1HOOKC0" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN VARUSE="FIRSTCOL"  EVAL="FALSE" LABEL="L28IF">
+																						<VARREF>
+																							<NAME VALUE="FIRSTCOL" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="C1HOOKC1" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																</IF>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN>
+																	<VARREF>
+																		<NAME VALUE="FIRSTHOOK" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="-1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="TOTREND"  EVAL="FALSE" LABEL="L29">
+																	<VARREF>
+																		<NAME VALUE="TOTREND" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,TOTREND" />
+																		</VARREF>
+																		<OP VALUE="+" />
+																		<VARREF>
+																			<NAME VALUE="-1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="FIRSTHOOK"  EVAL="FALSE" LABEL="L30IF">
+																	<VARREF>
+																		<NAME VALUE="FIRSTHOOK" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="C1HOOKC1" />
+																</SEND>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN VARUSE="FIRSTCOL"  EVAL="FALSE" LABEL="L31IF">
+																						<VARREF>
+																							<NAME VALUE="FIRSTCOL" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,0" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="C1HOOKC0" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN VARUSE="FIRSTCOL"  EVAL="FALSE" LABEL="L32IF">
+																						<VARREF>
+																							<NAME VALUE="FIRSTCOL" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="C1HOOKC1" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																</IF>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN>
+																	<VARREF>
+																		<NAME VALUE="FIRSTHOOK" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="-1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN VARUSE="TOTREND" EVAL="FALSE" LABEL="L33USE">
+																	<VARREF>
+																		<NAME VALUE="TOTREND" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,TOTREND" />
+																		</VARREF>
+																		<OP VALUE="+" />
+																		<VARREF>
+																			<NAME VALUE="-1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+
+</SPEC>

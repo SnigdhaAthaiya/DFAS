@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SPEC SYSTEM "../dat/SPEC.dtd">
+<SPEC>
+	<MODULE>
+		<MTYPE>
+			<NAME VALUE="UP0" />
+			<NAME VALUE="UP1" />
+			<NAME VALUE="ACK1" />
+			<NAME VALUE="ACK0" />
+		</MTYPE>
+	</MODULE>
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="TURNLOCK" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="TURN" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="CRITICAL" />
+							</IVAR>
+						</DECL>
+
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="TURN" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="CRITICAL" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ATOMIC>
+												<SEQUENCE>
+													<STEP>
+														<STMT>
+															<RECEIVE>
+																<NAME VALUE="UP0" />
+															</RECEIVE>
+														</STMT>
+													</STEP>
+													<STEP>
+														<STMT>
+															<ASSIGN>
+																<VARREF>
+																	<NAME VALUE="TURN" />
+																</VARREF>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="1,0" />
+																	</VARREF>
+																</EXPR>
+															</ASSIGN>
+														</STMT>
+													</STEP>
+													<STEP>
+														<STMT>
+															<SEND>
+																<NAME VALUE="ACK0" />
+															</SEND>
+														</STMT>
+													</STEP>
+												</SEQUENCE>
+											</ATOMIC>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ATOMIC>
+												<SEQUENCE>
+													<STEP>
+														<STMT>
+															<RECEIVE>
+																<NAME VALUE="UP1" />
+															</RECEIVE>
+														</STMT>
+													</STEP>
+													<STEP>
+														<STMT>
+															<ASSIGN>
+																<VARREF>
+																	<NAME VALUE="TURN" />
+																</VARREF>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="1,1" />
+																	</VARREF>
+																</EXPR>
+															</ASSIGN>
+														</STMT>
+													</STEP>
+													<STEP>
+														<STMT>
+															<SEND>
+																<NAME VALUE="ACK1" />
+															</SEND>
+														</STMT>
+													</STEP>
+												</SEQUENCE>
+											</ATOMIC>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+
+						</DO>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+
+
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="USER0" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="FLAG0" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="AGAIN" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="FLAG0" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="UP0" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<RECEIVE>
+							<NAME VALUE="ACK0" />
+						</RECEIVE>
+					</STMT>
+				</STEP>
+
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="TRUE" LABEL="L1" VARUSE="TURN">
+												<VARREF>
+													<NAME VALUE="TURN" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<BREAK />
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="TRUE" LABEL="L2" VARUSE="FLAG1">
+												<VARREF>
+													<NAME VALUE="FLAG1" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<BREAK />
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="TRUE" LABEL="L3" VARUSE="FLAG1">
+												<VARREF>
+													<NAME VALUE="FLAG1" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="TRUE" LABEL="L4" VARUSE="TURN">
+												<VARREF>
+													<NAME VALUE="TURN" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<BREAK />
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+				<!-- CRITICAL SECTION -->
+				<STEP>
+					<STMT>
+						<ASSIGN  EVAL="TRUE" LABEL="L5" VARUSE="CRITICAL">
+							<VARREF>
+								<NAME VALUE="CRITICAL" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,CRITICAL" />
+								</VARREF>
+								<OP VALUE="+" />
+								<VARREF>
+									<NAME VALUE="1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSERT  EVAL="TRUE" LABEL="L6" VARUSE="CRITICAL">
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="CRITICAL" />
+								</VARREF>
+								<OP VALUE="=="/>
+								<CONST VALUE="1"/>
+							</EXPR>
+						</ASSERT>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN  EVAL="TRUE" LABEL="L7" VARUSE="CRITICAL">
+							<VARREF>
+								<NAME VALUE="CRITICAL" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,CRITICAL" />
+								</VARREF>
+								<OP VALUE="+" />
+								<VARREF>
+									<NAME VALUE="1,-1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="FLAG0" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<GOTO>
+							<NAME VALUE="AGAIN" />
+						</GOTO>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="USER1" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="FLAG1" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="AGAIN" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="FLAG1" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="UP1" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<RECEIVE>
+							<NAME VALUE="ACK1" />
+						</RECEIVE>
+					</STMT>
+				</STEP>
+
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSIGN  EVAL="TRUE" LABEL="L8" VARUSE="TURN">
+												<VARREF>
+													<NAME VALUE="TURN" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<BREAK />
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSIGN  EVAL="TRUE" LABEL="L9" VARUSE="FLAG0">
+												<VARREF>
+													<NAME VALUE="FLAG0" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<BREAK />
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSIGN  EVAL="TRUE" LABEL="L10" VARUSE="FLAG0">
+												<VARREF>
+													<NAME VALUE="FLAG0" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN  EVAL="TRUE" LABEL="L11" VARUSE="TURN">
+												<VARREF>
+													<NAME VALUE="TURN" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<BREAK />
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+				<!-- CRITICAL SECTION -->
+				<STEP>
+					<STMT>
+						<ASSIGN  EVAL="TRUE" LABEL="L12" VARUSE="CRITICAL">
+							<VARREF>
+								<NAME VALUE="CRITICAL" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,CRITICAL" />
+								</VARREF>
+								<OP VALUE="+" />
+								<VARREF>
+									<NAME VALUE="1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSERT EVAL="TRUE" LABEL="L13" VARUSE="CRITICAL">
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="CRITICAL" />
+								</VARREF>
+								<OP VALUE="=="/>
+								<CONST VALUE="1"/>
+							</EXPR>
+						</ASSERT>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN EVAL="TRUE" LABEL="L14" VARUSE="CRITICAL">
+							<VARREF>
+								<NAME VALUE="CRITICAL" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,CRITICAL" />
+								</VARREF>
+								<OP VALUE="+" />
+								<VARREF>
+									<NAME VALUE="1,-1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="FLAG1" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<GOTO>
+							<NAME VALUE="AGAIN" />
+						</GOTO>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+
+</SPEC>

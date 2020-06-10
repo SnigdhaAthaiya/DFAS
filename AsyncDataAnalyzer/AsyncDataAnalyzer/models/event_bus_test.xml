@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SPEC SYSTEM "../dat/SPECForward.dtd">
+<SPEC>
+	<MODULE>
+		<MTYPE>
+			<NAME VALUE="SUB" />
+			<NAME VALUE="PUB1" />
+			<NAME VALUE="PUB2" />
+			<NAME VALUE="RES1" />
+			<NAME VALUE="RES2" />
+		</MTYPE>
+	</MODULE>
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="TESTSUBASYNCTRANS" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="NUMRESULTS" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="RESULT1" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="RESULT2" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="NUMRESULTS" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="RESULT1" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="RESULT2" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="SUB" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="PUB1" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="PUB2" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<RECEIVE>
+							<NAME VALUE="RES1" />
+						</RECEIVE>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<RECEIVE>
+							<NAME VALUE="RES2" />
+						</RECEIVE>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSERT LABEL="L1" VARUSE="NUMRESULTS" EVAL="TRUE">
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="NUMRESULTS" />
+								</VARREF>
+								<OP VALUE="=" />
+								<CONST VALUE="2" />
+							</EXPR>
+						</ASSERT>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSERT LABEL="L2" VARUSE="RESULT1" EVAL="TRUE">
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="RESULT1" />
+								</VARREF>
+								<OP VALUE="==" />
+								<CONST VALUE="1" />
+							</EXPR>
+						</ASSERT>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSERT LABEL="L3" VARUSE="RESULT2" EVAL="TRUE">
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="RESULT2" />
+								</VARREF>
+								<OP VALUE="==" />
+								<CONST VALUE="2" />
+							</EXPR>
+						</ASSERT>
+					</STMT>
+				</STEP>
+
+			</SEQUENCE>
+		</PROCTYPE>
+
+	</MODULE>
+
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="HANDLER" />
+			<SEQUENCE>
+				<STEP>
+					<STMT>
+						<RECEIVE>
+							<NAME VALUE="SUB" />
+						</RECEIVE>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="PUB1" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="TRUE" VARUSE="NUMRESULTS" LABEL="L4">
+												<VARREF>
+													<NAME VALUE="NUMRESULTS" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,NUMRESULTS" />
+													</VARREF>
+													<OP VALUE="+" />
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+
+									<STEP>
+										<STMT>
+											<ASSIGN>
+												<VARREF>
+													<NAME VALUE="RESULT1" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="RES1" />
+											</SEND>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="PUB2" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="TRUE" VARUSE="NUMRESULTS" LABEL="L5">
+												<VARREF>
+													<NAME VALUE="NUMRESULTS" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,NUMRESULTS" />
+													</VARREF>
+													<OP VALUE="+" />
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+
+									<STEP>
+										<STMT>
+											<ASSIGN>
+												<VARREF>
+													<NAME VALUE="RESULT2" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,2" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="RES2" />
+											</SEND>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+
+						</DO>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+
+</SPEC>

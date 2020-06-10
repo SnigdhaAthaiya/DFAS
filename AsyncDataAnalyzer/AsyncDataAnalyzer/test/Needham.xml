@@ -1,0 +1,2400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SPEC SYSTEM "../dat/SPEC.dtd">
+<SPEC>
+	<MODULE>
+		<MTYPE>
+			<NAME VALUE="SRESET" />
+			<NAME VALUE="RRESET" />
+			<NAME VALUE="DATA0" />
+			<NAME VALUE="DATA1" />
+			<NAME VALUE="NODATA0" />
+			<NAME VALUE="NODATA1" />
+			<NAME VALUE="RDY0" />
+			<NAME VALUE="RDY1" />
+			<NAME VALUE="NOTRDY0" />
+			<NAME VALUE="NOTRDY1" />
+		</MTYPE>
+	</MODULE>
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="SENDER" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="SN" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="SM" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="SN" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,-1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="I" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="SRESET" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<LABELEDST>
+												<NAME VALUE="ACKRESET" />
+											</LABELEDST>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="RRESET" />
+											</SEND>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN>
+												<VARREF>
+													<NAME VALUE="SN" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,-1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="I" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="RDY0" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="SM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="RDY1" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="SM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSERT EVAL="FALSE" VARUSE="SN,SM" LABEL="L1">
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="SM" />
+													</VARREF>
+													<OP VALUE="==" />
+													<CONST VALUE="1 - (SN + 1)" />
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<LABELEDST>
+												<NAME VALUE="ADVANCE" />
+											</LABELEDST>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ATOMIC>
+												<SEQUENCE>
+													<STEP>
+														<STMT>
+															<ASSIGN EVAL="FALSE" VARUSE="SN" LABEL="L2">
+																<VARREF>
+																	<NAME VALUE="SN" />
+																</VARREF>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="1,SN" />
+																	</VARREF>
+																	<OP VALUE="+" />
+																	<VARREF>
+																		<NAME VALUE="1,1" />
+																	</VARREF>
+																</EXPR>
+															</ASSIGN>
+														</STMT>
+													</STEP>
+													<STEP>
+														<STMT>
+															<ASSIGN>
+																<VARREF>
+																	<NAME VALUE="SN" />
+																</VARREF>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="-1,SN" />
+																	</VARREF>
+																	<OP VALUE="+" />
+																	<VARREF>
+																		<NAME VALUE="1,1" />
+																	</VARREF>
+																</EXPR>
+															</ASSIGN>
+														</STMT>
+													</STEP>
+												</SEQUENCE>
+											</ATOMIC>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN EVAL="FALSE" VARUSE="SN" LABEL="L3">
+																						<VARREF>
+																							<NAME VALUE="SN" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,0" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="DATA0" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN EVAL="FALSE" VARUSE="SN"  LABEL="L4">
+																						<VARREF>
+																							<NAME VALUE="SN" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="DATA1" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																</IF>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<GOTO>
+																	<NAME VALUE="E" />
+																</GOTO>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN EVAL="TRUE" VARUSE="SN" LABEL="L5">
+																						<VARREF>
+																							<NAME VALUE="SN" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,0" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="NODATA0" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN EVAL="FALSE" VARUSE="SN" LABEL="L6">
+																						<VARREF>
+																							<NAME VALUE="SN" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="NODATA1" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																</IF>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<GOTO>
+																	<NAME VALUE="N" />
+																</GOTO>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="NOTRDY0" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="SM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="NOTRDY1" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="SM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+
+
+									<STEP>
+										<STMT>
+											<ASSERT EVAL="FALSE" VARUSE="SN,SM" LABEL="L7">
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="SN" />
+													</VARREF>
+													<OP VALUE="==" />
+													<CONST VALUE="1 - SM" />
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="I" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="RESET" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="E" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="SRESET" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="ACKRESET" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="RDY0" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="SM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="RDY1" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="SM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN EVAL="FALSE" VARUSE="SN,SM" LABEL="L8">
+																	<VARREF>
+																		<NAME VALUE="SN" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,SM" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<GOTO>
+																	<NAME VALUE="RETRANS" />
+																</GOTO>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN EVAL="FALSE" VARUSE="SN,SM" LABEL="L9">
+																	<VARREF>
+																		<NAME VALUE="SN" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="-1,SM" />
+																		</VARREF>
+																		<OP VALUE="+" />
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<GOTO>
+																	<NAME VALUE="ADVANCE" />
+																</GOTO>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="NOTRDY0" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="SM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="NOTRDY1" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="SM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSERT EVAL="FALSE" VARUSE="SN,SM" LABEL="L10">
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="SN" />
+													</VARREF>
+													<OP VALUE="==" />
+													<CONST VALUE="1-SM" />
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="I" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<LABELEDST>
+												<NAME VALUE="RETRANS" />
+											</LABELEDST>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN EVAL="FALSE" VARUSE="SN" LABEL="L11">
+																	<VARREF>
+																		<NAME VALUE="SN" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="DATA0" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN EVAL="FALSE" VARUSE="SN" LABEL="L12">
+																	<VARREF>
+																		<NAME VALUE="SN" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="DATA1" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="RESET" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="N" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="SRESET" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="ACKRESET" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="RDY0" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="SM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="RDY1" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="SM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSERT EVAL="FALSE" VARUSE="SN,SM"  LABEL="L13">
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="SN" />
+													</VARREF>
+													<OP VALUE="==" />
+													<CONST VALUE="SM" />
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN EVAL="FALSE" VARUSE="SN" LABEL="L14">
+																	<VARREF>
+																		<NAME VALUE="SN" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="NODATA0" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN EVAL="FALSE" VARUSE="SN" LABEL="L15">
+																	<VARREF>
+																		<NAME VALUE="SN" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="NODATA1" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+
+								</SEQUENCE>
+							</OPTION>
+
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="FALSE" VARUSE="SN" LABEL="L16">
+												<VARREF>
+													<NAME VALUE="SN" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="DATA0" />
+											</SEND>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="E" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="FALSE" VARUSE="SN"  LABEL="L17">
+												<VARREF>
+													<NAME VALUE="SN" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="DATA1" />
+											</SEND>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="E" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="RESET" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="RESET" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="RRESET" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="SRESET" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN>
+												<VARREF>
+													<NAME VALUE="SN" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="-1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="I" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="RESET" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="RECEIVER" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="RN" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="RM" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="NEXP" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="I" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="RRESET" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<LABELEDST>
+												<NAME VALUE="ACKRESET" />
+											</LABELEDST>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="SRESET" />
+											</SEND>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN>
+												<VARREF>
+													<NAME VALUE="RN" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN>
+												<VARREF>
+													<NAME VALUE="NEXP" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="I" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="DATA0" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="RM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="DATA1" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="RM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSERT EVAL="FALSE" VARUSE="RN,RM" LABEL="L18">
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="RN" />
+													</VARREF>
+													<OP VALUE="==" />
+													<CONST VALUE="RM" />
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<LABELEDST>
+												<NAME VALUE="ADVANCE" />
+											</LABELEDST>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="FALSE" VARUSE="RN" LABEL="L19">
+												<VARREF>
+													<NAME VALUE="RN" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="-1,RN" />
+													</VARREF>
+													<OP VALUE="+" />
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSERT EVAL="FALSE" VARUSE="RM,NEXP" LABEL="L20" >
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="NEXP" />
+													</VARREF>
+													<OP VALUE="==" />
+													<CONST VALUE="RM" />
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="FALSE" VARUSE="RM" LABEL="L21" >
+												<VARREF>
+													<NAME VALUE="NEXP" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="-1,RM" />
+													</VARREF>
+													<OP VALUE="+" />
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN EVAL="FALSE" VARUSE="RN" LABEL="L22" >
+																	<VARREF>
+																		<NAME VALUE="RN" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="RDY0" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<GOTO>
+																						<NAME VALUE="E" />
+																					</GOTO>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="NOTRDY0" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<GOTO>
+																						<NAME VALUE="N" />
+																					</GOTO>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																</IF>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN EVAL="FALSE" VARUSE="RN" LABEL="L23" >
+																	<VARREF>
+																		<NAME VALUE="RN" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="RDY1" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<GOTO>
+																						<NAME VALUE="E" />
+																					</GOTO>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="NOTRDY1" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<GOTO>
+																						<NAME VALUE="N" />
+																					</GOTO>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																</IF>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="NODATA0" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="RM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="NODATA1" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="RM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSERT EVAL="FALSE" VARUSE="RN,RM" LABEL="L24" >
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="RN" />
+													</VARREF>
+													<OP VALUE="==" />
+													<CONST VALUE="RM" />
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="FALSE" VARUSE="RN" LABEL="L25" >
+												<VARREF>
+													<NAME VALUE="RN" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="RDY0" />
+											</SEND>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="E" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="RESET" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="E" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="RRESET" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="ACKRESET" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="DATA0" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="RM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="DATA1" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="RM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN EVAL="FALSE" VARUSE="RM,RN" LABEL="L26" >
+																	<VARREF>
+																		<NAME VALUE="RN" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="-1,RM" />
+																		</VARREF>
+																		<OP VALUE="+" />
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<GOTO>
+																	<NAME VALUE="RETRANS" />
+																</GOTO>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN EVAL="FALSE" VARUSE="RN,RM" LABEL="L27" >
+																	<VARREF>
+																		<NAME VALUE="SN" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,RM" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<GOTO>
+																	<NAME VALUE="ADVANCE" />
+																</GOTO>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="NODATA0" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="RM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="NODATA1" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="RM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSERT EVAL="FALSE" VARUSE="RN,RM" LABEL="L28" >
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="RN" />
+													</VARREF>
+													<OP VALUE="==" />
+													<CONST VALUE="RM" />
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="I" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<LABELEDST>
+												<NAME VALUE="RETRANS" />
+											</LABELEDST>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="RN" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<SEND>
+																					<NAME VALUE="RDY0" />
+																				</SEND>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="RN" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<SEND>
+																					<NAME VALUE="RDY1" />
+																				</SEND>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="E" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="RESET" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="N" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="RRESET" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="ACKRESET" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="DATA0" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="RM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<RECEIVE>
+																					<NAME VALUE="DATA1" />
+																				</RECEIVE>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN>
+																					<VARREF>
+																						<NAME VALUE="RM" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSERT EVAL="FALSE" VARUSE="RN,RM" LABEL="L29" >
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="RN" />
+													</VARREF>
+													<OP VALUE="==" />
+													<CONST VALUE="1 - RM" />
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN EVAL="FALSE" VARUSE="RN" LABEL="L30" >
+																					<VARREF>
+																						<NAME VALUE="RN" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<SEND>
+																					<NAME VALUE="NOTRDY0" />
+																				</SEND>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN EVAL="FALSE" VARUSE="RN" LABEL="L31" >
+																					<VARREF>
+																						<NAME VALUE="RN" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<SEND>
+																					<NAME VALUE="NOTRDY1" />
+																				</SEND>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN EVAL="FALSE" VARUSE="RN" LABEL="L32" >
+																					<VARREF>
+																						<NAME VALUE="RN" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,0" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<SEND>
+																					<NAME VALUE="RDY0" />
+																				</SEND>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ATOMIC>
+																	<SEQUENCE>
+																		<STEP>
+																			<STMT>
+																				<ASSIGN EVAL="FALSE" VARUSE="RN" LABEL="L33" >
+																					<VARREF>
+																						<NAME VALUE="RN" />
+																					</VARREF>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="1,1" />
+																						</VARREF>
+																					</EXPR>
+																				</ASSIGN>
+																			</STMT>
+																		</STEP>
+																		<STEP>
+																			<STMT>
+																				<SEND>
+																					<NAME VALUE="RDY1" />
+																				</SEND>
+																			</STMT>
+																		</STEP>
+																	</SEQUENCE>
+																</ATOMIC>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="E" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="RESET" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="RESET" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="RRESET" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN>
+												<VARREF>
+													<NAME VALUE="RN" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN>
+												<VARREF>
+													<NAME VALUE="NEXP" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="I" />
+											</GOTO>
+										</STMT>
+									</STEP>
+
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<GOTO>
+												<NAME VALUE="RESET" />
+											</GOTO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+</SPEC>

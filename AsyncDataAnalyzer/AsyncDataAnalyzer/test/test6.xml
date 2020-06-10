@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SPEC SYSTEM "../dat/SPEC.dtd">
+<SPEC>
+	<MODULE>
+		<MTYPE>
+			<NAME VALUE="M1" />
+			<NAME VALUE="M2" />
+		</MTYPE>
+	</MODULE>
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="P1" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="VAR1" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="VAR2" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="VAR1" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,3" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="M1" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSERT>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="VAR" />
+								</VARREF>
+								<OP VALUE="=" />
+								<CONST VALUE="1" />
+							</EXPR>
+						</ASSERT>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSERT>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="VAR" />
+								</VARREF>
+								<OP VALUE="=" />
+								<CONST VALUE="1" />
+							</EXPR>
+						</ASSERT>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSERT>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="VAR" />
+								</VARREF>
+								<OP VALUE="=" />
+								<CONST VALUE="1" />
+							</EXPR>
+						</ASSERT>
+					</STMT>
+				</STEP>
+
+
+			</SEQUENCE>
+		</PROCTYPE>
+
+	</MODULE>
+
+</SPEC>

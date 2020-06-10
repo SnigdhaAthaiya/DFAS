@@ -1,0 +1,1765 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SPEC SYSTEM "../dat/SPEC.dtd">
+<SPEC>
+	<MODULE>
+		<MTYPE>
+			<NAME VALUE="1ONE1" />
+			<NAME VALUE="1ONE2" />
+			<NAME VALUE="1TWO1" />
+			<NAME VALUE="1TWO2" />
+			<NAME VALUE="1WIN1" />
+			<NAME VALUE="1WIN2" />
+			<NAME VALUE="2ONE1" />
+			<NAME VALUE="2ONE2" />
+			<NAME VALUE="2TWO1" />
+			<NAME VALUE="2TWO2" />
+			<NAME VALUE="2WIN1" />
+			<NAME VALUE="2WIN2" />
+
+		</MTYPE>
+	</MODULE>
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="P1" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="NRLEADERS" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="ACTIVE1" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="MYNUM1" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="MAX1" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="NEIGHBOR1" />
+							</IVAR>
+						</DECL>
+
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="KW1" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="NRLEADERS" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="ACTIVE1" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="KW1" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="MYNUM1" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="MAX1" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,MYNUM1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="2ONE1" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="1ONE1" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="ACTIVE1" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="1" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="MAX1" />
+																						</VARREF>
+																						<OP VALUE="!=" />
+																						<CONST VALUE="1" />
+																					</EXPR>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="2TWO1" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="NEIGHBOR1" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<ELSE>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="KW1" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="2WIN1" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</ELSE>
+																</IF>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<ELSE>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="2ONE1" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</ELSE>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="1ONE2" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="ACTIVE1" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="1" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="MAX1" />
+																						</VARREF>
+																						<OP VALUE="!=" />
+																						<CONST VALUE="2" />
+																					</EXPR>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="2TWO2" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="NEIGHBOR1" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,2" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<ELSE>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="KW1" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="2WIN2" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</ELSE>
+																</IF>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<ELSE>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="2ONE2" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</ELSE>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="1TWO1" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="ACTIVE1" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="1" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="NEIGHBOR1" />
+																						</VARREF>
+																						<OP VALUE=">" />
+																						<CONST VALUE="1" />
+																					</EXPR>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="NEIGHBOR1" />
+																						</VARREF>
+																						<OP VALUE=">" />
+																						<VARREF>
+																							<NAME VALUE="MAX1" />
+																						</VARREF>
+																					</EXPR>
+
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="MAX1" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,NEIGHBOR1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<IF>
+																						<OPTION>
+																							<SEQUENCE>
+																								<STEP>
+																									<STMT>
+																										<EXPR>
+																											<VARREF>
+																												<NAME VALUE="NEIGHBOR1" />
+																											</VARREF>
+																											<OP VALUE="==" />
+																											<CONST VALUE="1" />
+																										</EXPR>
+																									</STMT>
+																								</STEP>
+																								<STEP>
+																									<STMT>
+																										<SEND>
+																											<NAME VALUE="2ONE1" />
+																										</SEND>
+																									</STMT>
+																								</STEP>
+																							</SEQUENCE>
+																						</OPTION>
+																						<OPTION>
+																							<SEQUENCE>
+																								<STEP>
+																									<STMT>
+																										<EXPR>
+																											<VARREF>
+																												<NAME VALUE="NEIGHBOR1" />
+																											</VARREF>
+																											<OP VALUE="==" />
+																											<CONST VALUE="2" />
+																										</EXPR>
+																									</STMT>
+																								</STEP>
+																								<STEP>
+																									<STMT>
+																										<SEND>
+																											<NAME VALUE="2ONE2" />
+																										</SEND>
+																									</STMT>
+																								</STEP>
+																							</SEQUENCE>
+																						</OPTION>
+																					</IF>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<ELSE>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="ACTIVE1" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,0" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</ELSE>
+																</IF>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<ELSE>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="2TWO1" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</ELSE>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+
+
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="1TWO2" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="ACTIVE1" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="1" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="NEIGHBOR1" />
+																						</VARREF>
+																						<OP VALUE=">" />
+																						<CONST VALUE="2" />
+																					</EXPR>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="NEIGHBOR1" />
+																						</VARREF>
+																						<OP VALUE=">" />
+																						<VARREF>
+																							<NAME VALUE="MAX1" />
+																						</VARREF>
+																					</EXPR>
+																				</STMT>
+																			</STEP>
+
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="MAX1" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,NEIGHBOR1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<IF>
+																						<OPTION>
+																							<SEQUENCE>
+																								<STEP>
+																									<STMT>
+																										<EXPR>
+																											<VARREF>
+																												<NAME VALUE="NEIGHBOR1" />
+																											</VARREF>
+																											<OP VALUE="==" />
+																											<CONST VALUE="1" />
+																										</EXPR>
+																									</STMT>
+																								</STEP>
+																								<STEP>
+																									<STMT>
+																										<SEND>
+																											<NAME VALUE="2ONE1" />
+																										</SEND>
+																									</STMT>
+																								</STEP>
+																							</SEQUENCE>
+																						</OPTION>
+																						<OPTION>
+																							<SEQUENCE>
+																								<STEP>
+																									<STMT>
+																										<EXPR>
+																											<VARREF>
+																												<NAME VALUE="NEIGHBOR1" />
+																											</VARREF>
+																											<OP VALUE="==" />
+																											<CONST VALUE="2" />
+																										</EXPR>
+																									</STMT>
+																								</STEP>
+																								<STEP>
+																									<STMT>
+																										<SEND>
+																											<NAME VALUE="2ONE2" />
+																										</SEND>
+																									</STMT>
+																								</STEP>
+																							</SEQUENCE>
+																						</OPTION>
+																					</IF>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<ELSE>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="ACTIVE1" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,0" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</ELSE>
+																</IF>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<ELSE>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="2TWO2" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</ELSE>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="1WIN1" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="MYNUM1" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="1" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN>
+																	<VARREF>
+																		<NAME VALUE="NRLEADERS" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,NRLEADERS" />
+																		</VARREF>
+																		<OP VALUE="+" />
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSERT>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="NRLEADERS" />
+																		</VARREF>
+																		<OP VALUE="==" />
+																		<CONST VALUE="1" />
+																	</EXPR>
+																</ASSERT>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="KW1" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="0" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="2WIN1" />
+																</SEND>
+															</STMT>
+														</STEP>
+
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<BREAK />
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="1WIN2" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="MYNUM1" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="2" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN>
+																	<VARREF>
+																		<NAME VALUE="NRLEADERS" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,NRLEADERS" />
+																		</VARREF>
+																		<OP VALUE="+" />
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSERT>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="NRLEADERS" />
+																		</VARREF>
+																		<OP VALUE="==" />
+																		<CONST VALUE="1" />
+																	</EXPR>
+																</ASSERT>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="KW1" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="0" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="2WIN2" />
+																</SEND>
+															</STMT>
+														</STEP>
+
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<BREAK />
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+
+						</DO>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+	
+	
+	
+	
+	
+	
+		<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="P2" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="ACTIVE2" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="MYNUM2" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="MAX2" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="NEIGHBOR2" />
+							</IVAR>
+						</DECL>
+
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="KW2" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="ACTIVE2" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="KW2" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="MYNUM2" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,2" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="MAX2" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,MYNUM2" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="1ONE2" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="2ONE1" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="ACTIVE2" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="1" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="MAX2" />
+																						</VARREF>
+																						<OP VALUE="!=" />
+																						<CONST VALUE="1" />
+																					</EXPR>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="1TWO1" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="NEIGHBOR2" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<ELSE>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="KW2" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="1WIN1" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</ELSE>
+																</IF>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<ELSE>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="1ONE1" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</ELSE>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="2ONE2" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="ACTIVE2" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="1" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="MAX2" />
+																						</VARREF>
+																						<OP VALUE="!=" />
+																						<CONST VALUE="2" />
+																					</EXPR>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="1TWO2" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="NEIGHBOR2" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,2" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<ELSE>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="KW2" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,1" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<SEND>
+																						<NAME VALUE="1WIN2" />
+																					</SEND>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</ELSE>
+																</IF>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<ELSE>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="1ONE2" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</ELSE>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="2TWO1" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="ACTIVE2" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="1" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="NEIGHBOR2" />
+																						</VARREF>
+																						<OP VALUE=">" />
+																						<CONST VALUE="1" />
+																					</EXPR>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="NEIGHBOR2" />
+																						</VARREF>
+																						<OP VALUE=">" />
+																						<VARREF>
+																							<NAME VALUE="MAX2" />
+																						</VARREF>
+																					</EXPR>
+
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="MAX2" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,NEIGHBOR2" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<IF>
+																						<OPTION>
+																							<SEQUENCE>
+																								<STEP>
+																									<STMT>
+																										<EXPR>
+																											<VARREF>
+																												<NAME VALUE="NEIGHBOR2" />
+																											</VARREF>
+																											<OP VALUE="==" />
+																											<CONST VALUE="1" />
+																										</EXPR>
+																									</STMT>
+																								</STEP>
+																								<STEP>
+																									<STMT>
+																										<SEND>
+																											<NAME VALUE="1ONE1" />
+																										</SEND>
+																									</STMT>
+																								</STEP>
+																							</SEQUENCE>
+																						</OPTION>
+																						<OPTION>
+																							<SEQUENCE>
+																								<STEP>
+																									<STMT>
+																										<EXPR>
+																											<VARREF>
+																												<NAME VALUE="NEIGHBOR2" />
+																											</VARREF>
+																											<OP VALUE="==" />
+																											<CONST VALUE="2" />
+																										</EXPR>
+																									</STMT>
+																								</STEP>
+																								<STEP>
+																									<STMT>
+																										<SEND>
+																											<NAME VALUE="1ONE2" />
+																										</SEND>
+																									</STMT>
+																								</STEP>
+																							</SEQUENCE>
+																						</OPTION>
+																					</IF>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<ELSE>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="ACTIVE2" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,0" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</ELSE>
+																</IF>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<ELSE>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="1TWO1" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</ELSE>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+
+
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="2TWO2" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="ACTIVE2" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="1" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<IF>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="NEIGHBOR2" />
+																						</VARREF>
+																						<OP VALUE=">" />
+																						<CONST VALUE="2" />
+																					</EXPR>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<EXPR>
+																						<VARREF>
+																							<NAME VALUE="NEIGHBOR2" />
+																						</VARREF>
+																						<OP VALUE=">" />
+																						<VARREF>
+																							<NAME VALUE="MAX2" />
+																						</VARREF>
+																					</EXPR>
+																				</STMT>
+																			</STEP>
+
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="MAX2" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,NEIGHBOR2" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<IF>
+																						<OPTION>
+																							<SEQUENCE>
+																								<STEP>
+																									<STMT>
+																										<EXPR>
+																											<VARREF>
+																												<NAME VALUE="NEIGHBOR2" />
+																											</VARREF>
+																											<OP VALUE="==" />
+																											<CONST VALUE="1" />
+																										</EXPR>
+																									</STMT>
+																								</STEP>
+																								<STEP>
+																									<STMT>
+																										<SEND>
+																											<NAME VALUE="1ONE1" />
+																										</SEND>
+																									</STMT>
+																								</STEP>
+																							</SEQUENCE>
+																						</OPTION>
+																						<OPTION>
+																							<SEQUENCE>
+																								<STEP>
+																									<STMT>
+																										<EXPR>
+																											<VARREF>
+																												<NAME VALUE="NEIGHBOR2" />
+																											</VARREF>
+																											<OP VALUE="==" />
+																											<CONST VALUE="2" />
+																										</EXPR>
+																									</STMT>
+																								</STEP>
+																								<STEP>
+																									<STMT>
+																										<SEND>
+																											<NAME VALUE="1ONE2" />
+																										</SEND>
+																									</STMT>
+																								</STEP>
+																							</SEQUENCE>
+																						</OPTION>
+																					</IF>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<ELSE>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN>
+																						<VARREF>
+																							<NAME VALUE="ACTIVE2" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,0" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</ELSE>
+																</IF>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<ELSE>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="1TWO2" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</ELSE>
+											</IF>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="2WIN1" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="MYNUM2" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="1" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN>
+																	<VARREF>
+																		<NAME VALUE="NRLEADERS" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,NRLEADERS" />
+																		</VARREF>
+																		<OP VALUE="+" />
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSERT>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="NRLEADERS" />
+																		</VARREF>
+																		<OP VALUE="==" />
+																		<CONST VALUE="1" />
+																	</EXPR>
+																</ASSERT>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="KW2" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="0" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="1WIN1" />
+																</SEND>
+															</STMT>
+														</STEP>
+
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<BREAK />
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="2WIN2" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="MYNUM2" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="2" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSIGN>
+																	<VARREF>
+																		<NAME VALUE="NRLEADERS" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,NRLEADERS" />
+																		</VARREF>
+																		<OP VALUE="+" />
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<ASSERT>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="NRLEADERS" />
+																		</VARREF>
+																		<OP VALUE="==" />
+																		<CONST VALUE="1" />
+																	</EXPR>
+																</ASSERT>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="KW2" />
+																	</VARREF>
+																	<OP VALUE="==" />
+																	<CONST VALUE="0" />
+																</EXPR>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="1WIN2" />
+																</SEND>
+															</STMT>
+														</STEP>
+
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<BREAK />
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+
+						</DO>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+</SPEC>

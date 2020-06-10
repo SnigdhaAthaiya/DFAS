@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SPEC SYSTEM "../dat/SPECForward.dtd">
+<SPEC>
+	<MODULE>
+		<MTYPE>
+			<NAME VALUE="M1" />
+			<NAME VALUE="M2" />
+		</MTYPE>
+	</MODULE>
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="TEST1" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="VAR1" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="VAR2" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="VAR2" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,3" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="M1" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSERT LABEL="L1" VARUSE="VAR2" EVAL="TRUE">
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="VAR2" />
+								</VARREF>
+								<OP VALUE="=" />
+								<CONST VALUE="3" />
+							</EXPR>
+						</ASSERT>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN VARUSE="VAR2" EVAL="TRUE" LABEL="L2">
+							<VARREF>
+								<NAME VALUE="VAR1" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="2,VAR2" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<IF>
+							<OPTION LABEL="L3" VARUSE="VAR1,VAR2" EVAL="TRUE">
+								<EXPR>
+									<VARREF>
+										<NAME VALUE="VAR1" />
+									</VARREF>
+									<OP VALUE=">" />
+									<VARREF>
+										<NAME VALUE="2,VAR2" />
+									</VARREF>
+								</EXPR>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSERT VARUSE="VAR1,VAR2" EVAL="TRUE" LABEL="L5">
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="VAR1" />
+													</VARREF>
+													<OP VALUE="==" />
+													<CONST VALUE="VAR2"/>													
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<ELSE>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSERT VARUSE="VAR1,VAR2" EVAL="TRUE" LABEL="L4">
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="VAR1" />
+													</VARREF>
+													<OP VALUE="!=" />
+													<CONST VALUE="VAR2"/>
+												</EXPR>
+											</ASSERT>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</ELSE>
+						</IF>
+					</STMT>
+				</STEP>
+
+
+			</SEQUENCE>
+		</PROCTYPE>
+
+	</MODULE>
+
+</SPEC>

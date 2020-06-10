@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SPEC SYSTEM "../dat/SPEC.dtd">
+<SPEC>
+	<MODULE>
+		<MTYPE>
+			<NAME VALUE="LK" />
+			<NAME VALUE="SLEEPQ" />
+			<NAME VALUE="RUN" />
+
+		</MTYPE>
+	</MODULE>
+
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="MAIN" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="RLOCK" />
+							</IVAR>
+						</DECL>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="RWANT" />
+							</IVAR>
+						</DECL>
+
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="STATE" />
+							</IVAR>
+						</DECL>
+
+
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="LK" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="SLEEPQ" />
+						</SEND>
+					</STMT>
+				</STEP>
+
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="RLOCK" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+
+
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="RWANT" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="STATE" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="RUN" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="RUN" />
+						</SEND>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+
+
+
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="CLIENT" />
+			<SEQUENCE>
+				<STEP>
+					<STMT>
+						<RECEIVE>
+							<NAME VALUE="RUN" />
+						</RECEIVE>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="SLEEP" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<RECEIVE>
+							<NAME VALUE="LK" />
+						</RECEIVE>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="TRUE" LABEL="L2IF" VARUSE="RLOCK">
+												<VARREF>
+													<NAME VALUE="RLOCK" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN>
+												<VARREF>
+													<NAME VALUE="RWANT" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN>
+												<VARREF>
+													<NAME VALUE="STATE" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="LK" />
+											</SEND>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<DO>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN EVAL="TRUE" LABEL="L3IF" VARUSE="STATE">
+																	<VARREF>
+																		<NAME VALUE="STATE" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,0" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<ASSIGN EVAL="TRUE" LABEL="L4IF" VARUSE="STATE">
+																	<VARREF>
+																		<NAME VALUE="STATE" />
+																	</VARREF>
+																	<EXPR>
+																		<VARREF>
+																			<NAME VALUE="1,1" />
+																		</VARREF>
+																	</EXPR>
+																</ASSIGN>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<BREAK />
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</DO>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<BREAK />
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="PROGRESS" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSERT EVAL="TRUE" VARUSE="RLOCK" LABEL="L5">
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="RLOCK" />
+								</VARREF>
+								<OP VALUE="==" />
+								<CONST VALUE="0" />
+							</EXPR>
+						</ASSERT>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="RLOCK" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,1" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="LK" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<GOTO>
+							<NAME VALUE="SLEEP" />
+						</GOTO>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+
+
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="SERVER" />
+			<SEQUENCE>
+				<STEP>
+					<STMT>
+						<RECEIVE>
+							<NAME VALUE="RUN" />
+						</RECEIVE>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="WAKEUP" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSIGN>
+							<VARREF>
+								<NAME VALUE="RLOCK" />
+							</VARREF>
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="1,0" />
+								</VARREF>
+							</EXPR>
+						</ASSIGN>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<RECEIVE>
+							<NAME VALUE="LK" />
+						</RECEIVE>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<SEND>
+							<NAME VALUE="LK" />
+						</SEND>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<IF>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ASSIGN EVAL="TRUE" LABEL="L8IF" VARUSE="RWANT">
+												<VARREF>
+													<NAME VALUE="RWANT" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,1" />
+													</VARREF>
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="SLEEPQ" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ASSIGN>
+												<VARREF>
+													<NAME VALUE="RWANT" />
+												</VARREF>
+												<EXPR>
+													<VARREF>
+														<NAME VALUE="1,0" />
+													</VARREF>
+
+												</EXPR>
+											</ASSIGN>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="LK" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="LK" />
+											</SEND>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<DO>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN EVAL="TRUE" LABEL="L13IF"
+																						VARUSE="STATE">
+																						<VARREF>
+																							<NAME VALUE="STATE" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,0" />
+																							</VARREF>
+
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																	<OPTION>
+																		<SEQUENCE>
+																			<STEP>
+																				<STMT>
+																					<ASSIGN EVAL="TRUE" LABEL="L14IF"
+																						VARUSE="STATE">
+																						<VARREF>
+																							<NAME VALUE="STATE" />
+																						</VARREF>
+																						<EXPR>
+																							<VARREF>
+																								<NAME VALUE="1,0" />
+																							</VARREF>
+																						</EXPR>
+																					</ASSIGN>
+																				</STMT>
+																			</STEP>
+																			<STEP>
+																				<STMT>
+																					<BREAK />
+																				</STMT>
+																			</STEP>
+																		</SEQUENCE>
+																	</OPTION>
+																</DO>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<ELSE>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<CONST VALUE="1" />
+																</EXPR>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</ELSE>
+											</IF>
+										</STMT>
+									</STEP>
+
+								</SEQUENCE>
+							</OPTION>
+							<ELSE>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<EXPR>
+												<CONST VALUE="1" />
+											</EXPR>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</ELSE>
+						</IF>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<GOTO>
+							<NAME VALUE="WAKEUP" />
+						</GOTO>
+					</STMT>
+				</STEP>
+
+
+
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</SPEC>

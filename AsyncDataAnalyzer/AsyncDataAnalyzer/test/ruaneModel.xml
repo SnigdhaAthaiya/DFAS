@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SPEC SYSTEM "../dat/SPEC.dtd">
+<SPEC>
+	<MODULE>
+		<MTYPE>
+			<NAME VALUE="LK0C" />
+			<NAME VALUE="LK0S" />
+			<NAME VALUE="LK1C" />
+			<NAME VALUE="LK1S" />
+			<NAME VALUE="RWANT0" />
+			<NAME VALUE="RWANT1" />
+			<NAME VALUE="RLOCK0" />
+			<NAME VALUE="RLOCK1" />
+			<NAME VALUE="STATEWAKE" />
+			<NAME VALUE="STATERUN" />
+			<NAME VALUE="SLEEP0" />
+			<NAME VALUE="SLEEP1" />
+			<NAME VALUE="RLOCK0ACK" />
+			<NAME VALUE="RLOCK1ACK" />
+		</MTYPE>
+	</MODULE>
+
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="START" />
+			<SEQUENCE>
+				<STEP>
+					<STMT>
+						<ATOMIC>
+							<SEQUENCE>
+								<STEP>
+									<STMT>
+										<SEND>
+											<NAME VALUE="LK0C" />
+										</SEND>
+									</STMT>
+								</STEP>
+								<STEP>
+									<STMT>
+										<SEND>
+											<NAME VALUE="LK0S" />
+										</SEND>
+									</STMT>
+								</STEP>
+							</SEQUENCE>
+						</ATOMIC>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="CLIENT" />
+			<SEQUENCE>
+				<STEP>
+					<DECLLIST>
+						<DECL>
+							<TYPENAME>
+								<NUM />
+							</TYPENAME>
+							<IVAR>
+								<NAME VALUE="RLOCK" />
+							</IVAR>
+						</DECL>
+					</DECLLIST>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="SLEEP" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ATOMIC>
+							<SEQUENCE>
+								<STEP>
+									<STMT>
+										<RECEIVE>
+											<NAME VALUE="LK0C" />
+										</RECEIVE>
+									</STMT>
+								</STEP>
+								<STEP>
+									<STMT>
+										<SEND>
+											<NAME VALUE="LK1C" />
+										</SEND>
+									</STMT>
+								</STEP>
+								<STEP>
+									<STMT>
+										<SEND>
+											<NAME VALUE="LK1S" />
+										</SEND>
+									</STMT>
+								</STEP>
+							</SEQUENCE>
+						</ATOMIC>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<DO>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ATOMIC>
+												<SEQUENCE>
+													<STEP>
+														<STMT>
+															<RECEIVE>
+																<NAME VALUE="RLOCK1" />
+															</RECEIVE>
+														</STMT>
+													</STEP>
+													<STEP>
+														<STMT>
+															<ASSIGN EVAL="TRUE" VARUSE="RLOCK" LABEL="L1">
+																<VARREF>
+																	<NAME VALUE="RLOCK" />
+																</VARREF>
+																<EXPR>
+																	<VARREF>
+																		<NAME VALUE="1,1" />
+																	</VARREF>
+																</EXPR>
+															</ASSIGN>
+														</STMT>
+													</STEP>
+												</SEQUENCE>
+											</ATOMIC>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="RWANT1" />
+											</SEND>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="STATEWAKE" />
+											</SEND>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ATOMIC>
+												<SEQUENCE>
+													<STEP>
+														<STMT>
+															<SEND>
+																<NAME VALUE="LK0C" />
+															</SEND>
+														</STMT>
+													</STEP>
+													<STEP>
+														<STMT>
+															<SEND>
+																<NAME VALUE="LK0S" />
+															</SEND>
+														</STMT>
+													</STEP>
+												</SEQUENCE>
+											</ATOMIC>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="STATERUN" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<ATOMIC>
+												<SEQUENCE>
+													<STEP>
+														<STMT>
+															<RECEIVE>
+																<NAME VALUE="RLOCK0" />
+															</RECEIVE>
+														</STMT>
+													</STEP>
+												</SEQUENCE>
+											</ATOMIC>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<BREAK />
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</DO>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="PROGRESS" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ASSERT EVAL="TRUE" VARUSE="RLOCK" LABEL="L2">
+							<EXPR>
+								<VARREF>
+									<NAME VALUE="RLOCK" />
+								</VARREF>
+								<OP VALUE="==" />
+								<CONST VALUE="0" />
+							</EXPR>
+						</ASSERT>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ATOMIC>
+							<SEQUENCE>
+								<STEP>
+									<STMT>
+										<ASSIGN EVAL="TRUE" VARUSE="RLOCK" LABEL="L3">
+											<VARREF>
+												<NAME VALUE="RLOCK" />
+											</VARREF>
+											<EXPR>
+												<VARREF>
+													<NAME VALUE="1,1" />
+												</VARREF>
+											</EXPR>
+										</ASSIGN>
+									</STMT>
+								</STEP>
+								<STEP>
+									<STMT>
+										<SEND>
+											<NAME VALUE="RLOCK1" />
+										</SEND>
+									</STMT>
+								</STEP>
+							</SEQUENCE>
+						</ATOMIC>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ATOMIC>
+							<SEQUENCE>
+								<STEP>
+									<STMT>
+										<SEND>
+											<NAME VALUE="LK0C" />
+										</SEND>
+									</STMT>
+								</STEP>
+								<STEP>
+									<STMT>
+										<SEND>
+											<NAME VALUE="LK0S" />
+										</SEND>
+									</STMT>
+								</STEP>
+							</SEQUENCE>
+						</ATOMIC>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<GOTO>
+							<NAME VALUE="SLEEP" />
+						</GOTO>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+
+	<MODULE>
+		<PROCTYPE>
+			<NAME VALUE="SERVER" />
+			<SEQUENCE>
+				<STEP>
+					<STMT>
+						<LABELEDST>
+							<NAME VALUE="WAKEUP" />
+						</LABELEDST>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<ATOMIC>
+							<SEQUENCE>
+								<STEP>
+									<STMT>
+										<ASSIGN EVAL="TRUE" VARUSE="RLOCK" LABEL="L4">
+											<VARREF>
+												<NAME VALUE="RLOCK" />
+											</VARREF>
+											<EXPR>
+												<VARREF>
+													<NAME VALUE="1,0" />
+												</VARREF>
+											</EXPR>
+										</ASSIGN>
+									</STMT>
+								</STEP>
+								<STEP>
+									<STMT>
+										<SEND>
+											<NAME VALUE="RLOCK0" />
+										</SEND>
+									</STMT>
+								</STEP>
+							</SEQUENCE>
+						</ATOMIC>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<RECEIVE>
+							<NAME VALUE="LK0S" />
+						</RECEIVE>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<IF>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="RWANT1" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<ATOMIC>
+												<SEQUENCE>
+													<STEP>
+														<STMT>
+															<RECEIVE>
+																<NAME VALUE="SLEEP0" />
+															</RECEIVE>
+														</STMT>
+													</STEP>
+													<STEP>
+														<STMT>
+															<SEND>
+																<NAME VALUE="SLEEP1" />
+															</SEND>
+														</STMT>
+													</STEP>
+												</SEQUENCE>
+											</ATOMIC>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="RWANT0" />
+											</SEND>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="LK0S" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<IF>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<RECEIVE>
+																	<NAME VALUE="STATEWAKE" />
+																</RECEIVE>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<SEND>
+																	<NAME VALUE="STATERUN" />
+																</SEND>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+												<OPTION>
+													<SEQUENCE>
+														<STEP>
+															<STMT>
+																<RECEIVE>
+																	<NAME VALUE="STATERUN" />
+																</RECEIVE>
+															</STMT>
+														</STEP>
+														<STEP>
+															<STMT>
+																<EXPR>
+																	<CONST VALUE="1" />
+																</EXPR>
+															</STMT>
+														</STEP>
+													</SEQUENCE>
+												</OPTION>
+											</IF>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<SEND>
+												<NAME VALUE="SLEEP0" />
+											</SEND>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+							<OPTION>
+								<SEQUENCE>
+									<STEP>
+										<STMT>
+											<RECEIVE>
+												<NAME VALUE="RWANT0" />
+											</RECEIVE>
+										</STMT>
+									</STEP>
+									<STEP>
+										<STMT>
+											<EXPR>
+												<CONST VALUE="1" />
+											</EXPR>
+										</STMT>
+									</STEP>
+								</SEQUENCE>
+							</OPTION>
+						</IF>
+					</STMT>
+				</STEP>
+				<STEP>
+					<STMT>
+						<GOTO>
+							<NAME VALUE="WAKEUP" />
+						</GOTO>
+					</STMT>
+				</STEP>
+			</SEQUENCE>
+		</PROCTYPE>
+	</MODULE>
+
+</SPEC>
