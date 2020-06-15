@@ -6,5 +6,18 @@ This is a prototype implementation of the data flow analysis algorithms for asyn
  We propose two approaches, which elide a large class of infeasible paths, and generalize upon the state of art by admitting infinite abstract analysis domains. Our first approach, ForwardDFAS, is a conservative algorithm that admits any infinite abstract data domain. The second approach, BackwardDFAS is a precise algorithm and admits a more restricted class of data domains. More details can be found in the [thesis](https://tinyurl.com/y8zglqpe).
  
  
- We have implemented our approaches with different lattices, and have analyzed their performance on a set of 14 benchmarks. We are making the benchmarks and their models avalaible along with the tool source.
+ We have implemented our approaches, and have analyzed their performance on a set of 14 benchmarks and 3 abstract domains. We are making the benchmarks and their models avalaible along with the tool source.
  
+ 
+ ## Input to the Tool
+ XML inputs
+ 
+ ## Running the Analyses
+ forward backward
+ 
+ ## Understanding the Output
+ broad output, data domain output format
+ 
+ ## Editing the source
+ 
+ In case of any queries or suggestions, feel free to [email](snigdha@iisc.ac.in) me.
