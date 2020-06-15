@@ -94,7 +94,7 @@
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
-		
+
 
 		<plugins>
 			<plugin>
@@ -105,6 +105,31 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<outputDirectory>target</outputDirectory>
+					<resources>
+						<resource>
+							<directory>models</directory>
+							<targetPath>models</targetPath>							
+						</resource>
+						<resource>
+							<directory>dat</directory>
+							<targetPath>dat</targetPath>
+						</resource>
+						<resource>
+							<directory>${basedir}</directory>
+							<includes>
+								<include>log4j.properties</include>
+							</includes>
+							
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
