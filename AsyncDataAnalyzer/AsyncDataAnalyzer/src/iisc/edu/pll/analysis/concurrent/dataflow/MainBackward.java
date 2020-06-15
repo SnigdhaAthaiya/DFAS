@@ -101,6 +101,8 @@ public class MainBackward {
 			if (cmd.hasOption("inputFileName")) {
 				this.inputFilename = cmd.getOptionValue("inputFileName");
 				Globals.filename = inputFilename;
+				this.assertionFile = getFileName();
+				
 			} else {
 				System.out.println("kindly enter input XML filename");
 				validParams = false;
@@ -147,8 +149,10 @@ public class MainBackward {
 		int sepIndex = 0;
 		if (inputFilename.contains("/"))
 			sepIndex = inputFilename.lastIndexOf("/");
-		if (inputFilename.contains("\\"))
+		else if (inputFilename.contains("\\"))
 			sepIndex = inputFilename.lastIndexOf("\\");
+		else
+			sepIndex = -1;
 
 		int dotindex = inputFilename.lastIndexOf(".");
 
