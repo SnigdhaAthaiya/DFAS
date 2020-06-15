@@ -6,7 +6,7 @@ This is a prototype implementation of the intra-procedural data flow analysis al
  We propose two approaches, which elide a large class of infeasible paths, and generalize upon the state of art by admitting infinite abstract analysis domains. Our first approach, ForwardDFAS, is a conservative algorithm that admits any infinite abstract data domain. The second approach, BackwardDFAS is a precise algorithm and admits a more restricted class of data domains. More details can be found in the [thesis](https://tinyurl.com/y8zglqpe).
  
  
- We have implemented our approaches, and have analyzed their performance on a set of 14 benchmarks and 3 abstract domains. We are making the benchmarks and their models avalaible along with the tool source. Four of these benchmarks -- bartlett, leader, lynch, and peterson, are Promela models for the [Spin model-checker](www.imm.dtu.dk/~albl/promela.html). Three benchmarks -- boundedAsync, receive1, and replicatingStorage, are taken from the [P language repository](www.github.com/p-org), while two -- server and chameneos, are taken from the [Basset repository](www.github.com/SoftwareEngineeringToolDemos/FSE-2010-Basset), which contains actor-based examples for Java
+ We have implemented our approaches, and have analyzed their performance on a set of 14 benchmarks and 3 abstract domains. We are making the benchmarks and their models available along with the tool source. Four of these benchmarks -- bartlett, leader, lynch, and peterson, are Promela models for the [Spin model-checker](www.imm.dtu.dk/~albl/promela.html). Three benchmarks -- boundedAsync, receive1, and replicatingStorage, are taken from the [P language repository](www.github.com/p-org), while two -- server and chameneos, are taken from the [Basset repository](www.github.com/SoftwareEngineeringToolDemos/FSE-2010-Basset), which contains actor-based examples for Java
 PathFinder. Four benchmarks -- event\_bus\_test, jobqueue\_test, nursery\_test and bookCollectionStore are  real world [Go programs](www.github.com/avelino/awesome-go). There is one toy example "mutualExclusionUnbounded", for ensuring mutual exclusion, via blocking receive messages, that we have made ourselves. Some of the benchmarks use procedures, but none of them use recursion, so we have manually inlined the procedure calls. 
 
  
@@ -17,9 +17,16 @@ PathFinder. Four benchmarks -- event\_bus\_test, jobqueue\_test, nursery\_test a
  We have manually translated each benchmark into an XML file, which we call a **model**. Details about the modeling decisions are present in the thesis.
  
 
+ ## Downloading and Building the Tool
  
+ The tool is a Maven Project. It can be built using the command-line or can be imported as an Eclipse project, and them built using the Maven tool in Eclipse. For both the methods, Maven should be installed on your system. 
+ 
+ ### Building the Tool Using Command-Line
+ 
+ To build the tool using command-line, you for
  ## Running the Analyses
- forward backward
+ 
+ 
  
  ## Understanding the Output
  broad output, data domain output format
