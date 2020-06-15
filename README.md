@@ -19,11 +19,20 @@ PathFinder. Four benchmarks -- event\_bus\_test, jobqueue\_test, nursery\_test a
 
  ## Downloading and Building the Tool
  
- The tool is a Maven Project. It can be built using the command-line or can be imported as an Eclipse project, and them built using the Maven tool in Eclipse. For both the methods, Maven should be installed on your system. 
+ The tool is a Maven Project. It can be built using the command-line or can be imported as an Eclipse project, and then built using the Maven tool in Eclipse. For both the methods, [Maven](https://maven.apache.org/install.html) should be installed on your system. To begin with, clone the tool or download the source. We will call the directory *DFAS\AsyncDataAnalyzer\AsyncDataAnayzer* as the root directory.
  
  ### Building the Tool Using Command-Line
  
- To build the tool using command-line, you for
+ To build the tool using command-line, go to folder `DFAS -> AsyncDataAnalyzer -> AsyncDataAnalyzer` and run `mvn clean install`. This will download all the necessary libraries automatically and create a folder *target* in the root directory.
+ 
+ ### Building the Tool Using Eclipse
+ 
+ Import the tool in Eclipse using `Right-Click -> Import -> Maven -> Existing Maven Projects` and selecting the downloaded *DFAS* as the root directory. Eclipse will detect the project and the *pom.xml* file. Click on **Finish**. Then, right-click on the *pom.xml* file, select `Run As -> Maven build`. A new dialog box will open for a new run configuration. Enter **clean install** in the Goals field and click on **Run**. Maven will download the dependencies and create the *target* folder in the root directory.
+ 
+ ### *target* Folder Structure
+ 
+ Besides generated sources and other Maven artifacts, the *target* folder has four important items. The *models* directory, the *dat* directory, the runnable jar file `DFAS-1.0.RELEASE-jar-with-dependencies.jar`, and the *log4j.properties* file. The *models* directory contains all the models. The *dat* folder contains the DTD file *SPECForward.dtd*. The Jar file is the tool jar and can be used to analyze the models. *log4j.properties* file is required by the tool jar file for logging. 
+ 
  ## Running the Analyses
  
  
