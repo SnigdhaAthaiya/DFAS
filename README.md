@@ -14,7 +14,7 @@ PathFinder. Four benchmarks -- event\_bus\_test, jobqueue\_test, nursery\_test a
  ## Input to the Tool
  Our DFAS implementations expect the asynchronous system to be specified as an XML file. We have developed a custom XML schema for this, closely based on the Promela modeling language used in Spin~\cite{holzmann2004spin}. The schema *SPECForward.dtd* is available in the *dat*  folder. The XML format allowed us to evaluate our approach on examples from different languages. 
  
- We have manually translated each benchmark into an XML file, which we call a **model**. Details about the modeling decisions are present in the thesis.
+ We have manually translated each benchmark into an XML file, which we call a **model**. Details about the modeling decisions are present in the thesis. The folder *benchmark-sources* contains the original source code of the XML models. Users can compare the code of Promela models like *bartlett.pml* to the corresponding model *bartlett.xml* to understand the modeling language better.
  
 
  ## Downloading and Building the Tool
@@ -29,11 +29,18 @@ PathFinder. Four benchmarks -- event\_bus\_test, jobqueue\_test, nursery\_test a
  
  Import the tool in Eclipse using `Right-Click -> Import -> Maven -> Existing Maven Projects` and selecting the downloaded *DFAS* as the root directory. Eclipse will detect the project and the *pom.xml* file. Click on **Finish**. Then, right-click on the *pom.xml* file, select `Run As -> Maven build`. A new dialog box will open for a new run configuration. Enter **clean install** in the Goals field and click on **Run**. Maven will download the dependencies and create the *target* folder in the root directory.
  
+  
  ### *target* Folder Structure
  
- Besides generated sources and other Maven artifacts, the *target* folder has four important items. The *models* directory, the *dat* directory, the runnable jar file `DFAS-1.0.RELEASE-jar-with-dependencies.jar`, and the *log4j.properties* file. The *models* directory contains all the models. The *dat* folder contains the DTD file *SPECForward.dtd*. The Jar file is the tool jar and can be used to analyze the models. *log4j.properties* file is required by the tool jar file for logging. 
+ Besides generated sources and other Maven artifacts, the *target* folder has four important items. The *models* directory, the *dat* directory, the runnable jar file `DFAS-1.0.RELEASE-jar-with-dependencies.jar`, and the *log4j.properties* file. The *models* directory contains all the models and is a copy of the *models* folder present in the root folder. The *dat* folder contains the DTD file *SPECForward.dtd*. The Jar file is the tool jar and can be used to analyze the models. *log4j.properties* file is required by the tool jar file for logging. 
  
  ## Running the Analyses
+ 
+ There are two kinds of analysis that the tool supports - ForwardDFAS and BackwardDFAS. Therefore there are two kinds of run configurations possible in the tool. To run ForwardDFAS, following parameters are required :
+ * -forward :  this tells the tool that you want to run ForwardDFAS
+ * -inputFileName <path to model file>:  provides the path to the model file to be analyzed. The tool has been tested with relative paths. This is the reason why the *models* and *dat* folder are provided along with the jar file in the *target* folder.
+ * -latticeType :  for forwardDFAS, the value of this parameter can only be "cp".
+ * -cutoff <n> : this option takes a number `n` as input. As forwardDFAS is a conservative analysis, this parameter specifies the maximum number of instances of each kind of message in the system that is tracked precisely. Once the number of instances of messages in the channel goes above `n` then the analysis assumes that the channel contains infinite instances of that type of message.
  
  
  
