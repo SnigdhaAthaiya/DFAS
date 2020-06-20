@@ -96,11 +96,11 @@ An assertion in the model is declared using the \<ASSERT\> tag. For instance, th
 
 * The file also reports the results for individual uses using LABEL and VARUSE information. For instance, for Label L1 that uses variable NCRITICAL, the LCP result is shown in lines 8-10 (in IDE format). The file first displays the "use" information  - label and variable, besides some other information. Then it displays the data flow fact computed for the use. In case of result.out, it is 
 	
-	`\_lambda -->NCRITICAL : LCPRep [a=0, b=0, c=top]`	
+	`_lambda -->NCRITICAL : LCPRep [a=0, b=0, c=top]`	
 	
 	which can be interpreted as NCRITICAL== 0. The general interpretation of the data flow fact `V1 -->V2 : LCPRep [a=a1, b=b1, c=c1]`, where V1 and V2 are variables and a1 and b1 are integers, and c can be an integer, "bot" (representing non-constant value), or "top"  (representing unreachable value), is 
 	
-	`V2 = (a1 * V1 + b1) \\meet (c1)`  
+	`V2 = (a1 * V1 + b1) \meet (c1)`  
 	
 	If c1 is bot, then the variable is a non-constant. If V1 is \_lambda and c1 is top then the V2 is a constant and the value is equal to b1. If a variable is constant (like in this example), then the output file also contains the line "for node ... variable ... is constant" (see line 13 in result.out) after displaying the result for the use.
 	
