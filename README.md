@@ -38,10 +38,17 @@ PathFinder. Four benchmarks -- event\_bus\_test, jobqueue\_test, nursery\_test a
  
  There are two kinds of analysis that the tool supports - ForwardDFAS and BackwardDFAS. Therefore there are two kinds of run configurations possible in the tool. To run ForwardDFAS, following parameters are required :
  * -forward :  this tells the tool that you want to run ForwardDFAS
- * -inputFileName <path to model file>:  provides the path to the model file to be analyzed. The tool has been tested with relative paths. This is the reason why the *models* and *dat* folder are provided along with the jar file in the *target* folder.
- * -latticeType :  for forwardDFAS, the value of this parameter can only be "cp".
- * -cutoff <n> : this option takes a number `n` as input. As forwardDFAS is a conservative analysis, this parameter specifies the maximum number of instances of each kind of message in the system that is tracked precisely. Once the number of instances of messages in the channel goes above `n` then the analysis assumes that the channel contains infinite instances of that type of message.
+ * -inputFileName `path to model file`:  provides the path to the model file to be analyzed. The tool has been tested with relative paths. This is the reason why the *models* and *dat* folder are provided along with the jar file in the *target* folder.
+ * -latticeType `T` :  for forwardDFAS, the value of T can only be "cp", for constant propagation analysis.
+ * -cutoff `n` : this option takes a number `n` as input. As forwardDFAS is a conservative analysis, this parameter specifies the maximum number of instances of each kind of message in the system that is tracked precisely. Once the number of instances of messages in the channel goes above `n` then the analysis assumes that the channel contains infinite instances of that type of message.
  
+ For running backwardDFAS, you need to provide the following parameters :
+ * -backward : this tells the tool that you want to run backwardDFAS
+ * -inputFileName `path to model file`:  provides the path to the model file to be analyzed. The tool has been tested with relative paths. This is the reason why the *models* and *dat* folder are provided along with the jar file in the *target* folder.
+ * -latticeType `T` : the possible values for T are "lcp" for linear constant propagation, "ara" for affine relations analysis, and "ccp" for copy constant propagation.
+ * -mode `M` : the possible values for M are "demand" for precise analysis and "naive" for the analysis that ignores all channel operations.
+ 
+ These arguments can be provided for the Eclipse runs as it is by modifying the run configuration associated with the `iisc.edu.pll.Main` class. Many of the models are large in sizes and require signigficant memory for running. Therefore, in case of out of memory errors, allocate more RAM to the tool while running. For instance, the model *chameneos.xml* runs out of 100GB of memory for cutoff value 2. All of the models except *chameneos.xml* and *lynch.xml* should terminate within seconds and will not use more than 8GB of memory.
  
  
  ## Understanding the Output
