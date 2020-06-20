@@ -24,7 +24,7 @@ An assertion in the model is declared using the \<ASSERT\> tag. For instance, th
 
  ## Downloading and Building the Tool
  
- The tool is a Maven Project. It can be built using the command-line or can be imported as an Eclipse project, and then built using the Maven tool in Eclipse. For both the methods, [Maven](https://maven.apache.org/install.html) should be installed on your system. To begin with, clone the tool or download the source. We will call the directory *DFAS\AsyncDataAnalyzer\AsyncDataAnayzer* as the root directory.
+ The tool is a Maven Project. It can be built using the command-line or can be imported as an Eclipse project, and then built using the Maven tool in Eclipse. For both the methods, [Maven](https://maven.apache.org/install.html) should be installed on your system. To begin with, clone the tool or download the source. We will call the directory *DFAS/AsyncDataAnalyzer/AsyncDataAnayzer* as the root directory.
  
  ### Building the Tool Using Command-Line
  
@@ -55,16 +55,16 @@ An assertion in the model is declared using the \<ASSERT\> tag. For instance, th
  
  These arguments can be provided for the Eclipse runs as it is by modifying the run configuration associated with the `iisc.edu.pll.Main` class. Many models are large and require significant memory for running. Therefore, in case of out of memory errors, allocate more RAM to the tool while running. For instance, the model *chameneos.xml* runs out of 100GB of memory for cutoff value 2. Most of the models except *chameneos.xml* and *lynch.xml* should terminate within seconds and will not use more than 8GB of memory.
  
- There are two things to keep in mind while running the analysis. First, remove the *output\result.out* and *output\debug.out* files before running any analysis. The logger is configured to append to these files currently and not deleting these files will keep accumulating results due to different runs. Secondly, check the paths in the log4j.properties file according to the system you are using, more precisely the path separators.
+ There are two things to keep in mind while running the analysis. First, remove the *output/result.out* and *output/debug.out* files before running any analysis. The logger is configured to append to these files currently and not deleting these files will keep accumulating results due to different runs. Secondly, check the paths in the log4j.properties file according to the system you are using, more precisely the path separators.
  
  
  ## Understanding the Output
- The tool produces two files as output - *output\result.out* and *output\debug.out*. The main output of the tool is present in the *output\result.out* file. The *debug.out* file only prints some debugging statistics about the runs. The *result.out* file looks a little different for forwardDFAS and backwardDFAS. 
+ The tool produces two files as output - *output/result.out* and *output/debug.out*. The main output of the tool is present in the *output/result.out* file. The *debug.out* file only prints some debugging statistics about the runs. The *result.out* file looks a little different for forwardDFAS and backwardDFAS. 
  
  ### Output of ForwardDFAS
  To explain the output of the forward analysis we take the output of the run configuration
  
- `-forward -inputFileName "models\mutualExlcusionUnbounded.xml" -latticeType "cp" -cutoff "2"`.
+ `-forward -inputFileName "models/mutualExlcusionUnbounded.xml" -latticeType "cp" -cutoff "2"`.
  
  The important features of the output file *result.out* are as follows : 
 
@@ -84,7 +84,7 @@ An assertion in the model is declared using the \<ASSERT\> tag. For instance, th
  ### Output of BackwardDFAS
  To explain the output of the backward analysis we take the output of the run configuration
  
- `-backward -inputFileName "models\mutualExlcusionUnbounded.xml" -latticeType "lcp" -mode "demand"`.
+ `-backward -inputFileName "models/mutualExlcusionUnbounded.xml" -latticeType "lcp" -mode "demand"`.
  
  The important features of the output file *result.out* are as follows : 
 
