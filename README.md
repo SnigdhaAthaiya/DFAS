@@ -15,7 +15,7 @@ PathFinder. Four benchmarks -- event\_bus\_test, jobqueue\_test, nursery\_test a
  ## Input to the Tool
  Our DFAS implementations expect the asynchronous system to be specified as an XML file. We have developed a custom XML schema for this, closely based on the Promela modelling language used in [Spin model-checker](www.imm.dtu.dk/~albl/promela.html). The schema *SPECForward.dtd* is available in the *dat*  folder. The XML format allowed us to evaluate our approach on examples from different languages. 
  
- We have manually translated each benchmark into an XML file, which we call a **model**. Details about the modelling decisions are present in the thesis. The folder *benchmark-sources* contains the original source code of the XML models. Users can compare the code of Promela models like *bartlett.pml* to the corresponding model *bartlett.xml* to understand the modelling language better.
+ We have manually translated each benchmark into an XML file, which we call a **model**. Details about the modelling decisions are present in the thesis. The file *benchsources.pdf* contains the links to the original source code of the XML models. Users can compare the code of Promela models like *bartlett.pml* to the corresponding model *bartlett.xml* to understand the modelling language better.
  
  Each variable reference in any statement is called a "use". For instance, in statement `x = x+1`, there is just one use, of variable x.  In all our experiments, the objective is to find the uses that are definitely constants. This is a common objective in many research papers, as finding constants enables optimizations such as constant folding, and also checking assertions in the code. 
  
