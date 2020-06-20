@@ -78,7 +78,7 @@ An assertion in the model is declared using the \<ASSERT\> tag. For instance, th
 	
 	In order to check assertions, one has to manually identify the variables that occur in the assertion, then look up the output file to see whether those variables have constant values at the location of the assertion, and then manually infer whether the assertion verifies or not.
 
-	* The file reports the value of the cutoff in the second line (See line 3 in result.out). 
+* The file reports the value of the cutoff in the second line (See line 3 in result.out). 
 
  
  ### Output of BackwardDFAS
